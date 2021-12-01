@@ -8,15 +8,17 @@ contract('StarNotary', (accs) => {
   owner = accounts[0];
 });
 
+before(async () => {
+  instance = await StarNotary.deployed();
+});
+
 it('can create a star', async () => {
   let tokenId = 1;
-  let instance = await StarNotary.deployed();
   await instance.createStar('Awesome Star!', tokenId, { from: accounts[0] })
   assert.equal(await instance.tokenIdToStarInfo.call(tokenId), 'Awesome Star!')
 });
 
 it('lets user1 put up their star for sale', async () => {
-  let instance = await StarNotary.deployed();
   let user1 = accounts[1];
   let starId = 2;
   let starPrice = web3.utils.toWei(".01", "ether");
@@ -26,7 +28,6 @@ it('lets user1 put up their star for sale', async () => {
 });
 
 it('lets user1 get the funds after the sale', async () => {
-  let instance = await StarNotary.deployed();
   let user1 = accounts[1];
   let user2 = accounts[2];
   let starId = 3;
@@ -43,7 +44,6 @@ it('lets user1 get the funds after the sale', async () => {
 });
 
 it('lets user2 buy a star, if it is put up for sale', async () => {
-  let instance = await StarNotary.deployed();
   let user1 = accounts[1];
   let user2 = accounts[2];
   let starId = 4;
@@ -57,7 +57,6 @@ it('lets user2 buy a star, if it is put up for sale', async () => {
 });
 
 it('lets user2 buy a star and decreases its balance in ether', async () => {
-  let instance = await StarNotary.deployed();
   let user1 = accounts[1];
   let user2 = accounts[2];
   let starId = 5;
@@ -76,7 +75,6 @@ it('lets user2 buy a star and decreases its balance in ether', async () => {
 
 // Task 2: The token name and token symbol are added properly.
 it('can add the star name and star symbol properly', async () => {
-  let instance = await StarNotary.deployed();
   let starId = 6;
   let user = accounts[1];
 
@@ -87,7 +85,6 @@ it('can add the star name and star symbol properly', async () => {
 
 // Task 2: 2 users can exchange their stars.
 it('lets 2 users exchange stars', async () => {
-  let instance = await StarNotary.deployed();
   let starId1 = 7;
   let starId2 = 8;
   let user1 = accounts[1];
@@ -109,7 +106,6 @@ it('lets 2 users exchange stars', async () => {
 
 // Task 2: Stars Tokens can be transferred from one address to another.
 it('lets a user transfer a star', async () => {
-  let instance = await StarNotary.deployed();
   let starId = 9;
   let user1 = accounts[1];
   let user2 = accounts[2];
